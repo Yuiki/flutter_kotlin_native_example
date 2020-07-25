@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,6 +52,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _msg = '';
 
   void _incrementCounter() {
     setState(() {
@@ -60,6 +62,20 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    initMessage();
+  }
+
+  Future initMessage() async {
+    final msg = await MethodChannel("api").invokeMethod("getMessage");
+    setState(() {
+      _msg = msg;
     });
   }
 
@@ -97,9 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
+            Text(_msg),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,

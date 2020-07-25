@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import common
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -7,6 +8,15 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
+    let channel = FlutterMethodChannel.init(name: "api", binaryMessenger: controller as! FlutterBinaryMessenger)
+    
+    channel.setMethodCallHandler({
+        (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+
+        result(CommonKt.getMessage());
+    });
+
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
