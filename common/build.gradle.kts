@@ -24,10 +24,16 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+        implementation("io.ktor:ktor-client-core:1.3.2")
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation("io.ktor:ktor-client-android:1.3.2")
+    }
+
+    sourceSets["iosMain"].dependencies {
+        implementation("io.ktor:ktor-client-ios:1.3.2")
     }
 }
 

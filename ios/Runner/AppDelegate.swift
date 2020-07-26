@@ -14,7 +14,9 @@ import common
     channel.setMethodCallHandler({
         (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
 
-        result(CommonKt.getMessage());
+        CommonKt.testApi { (it) in
+            result(String(it.size));
+        }
     });
 
     GeneratedPluginRegistrant.register(with: self)
