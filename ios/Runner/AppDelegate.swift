@@ -14,10 +14,10 @@ import common
     channel.setMethodCallHandler({
         (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
 
-        CommonKt.testApi { (it) in
-            result(String(it.size));
-        }
-    });
+        CommonKt.testApi(callback: ({ it in
+            result(String(it.count));
+        }))
+    })
 
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

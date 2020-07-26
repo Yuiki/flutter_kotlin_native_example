@@ -5,14 +5,20 @@ import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
 
 internal expect val ApplicationDispatcher: CoroutineDispatcher
 
-fun testApi(callback: (ByteArray) -> Unit) {
-    val client = HttpClient()
+fun testApi(callback: (List<Todo>) -> Unit) {
+    val client = HttpClient {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer()
+        }
+    }
     GlobalScope.launch(ApplicationDispatcher) {
         val url = "https://jsonplaceholder.typicode.com/todos"
-        val res = client.get<ByteArray>(url)
+        val res = client.get<List<Todo>>(url)
         callback(res)
     }
 }
