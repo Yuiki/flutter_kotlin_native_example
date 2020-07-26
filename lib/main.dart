@@ -50,9 +50,39 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+class Todo {
+  final int userId;
+  final int id;
+  final String title;
+  final bool completed;
+
+  Todo({
+    @required this.userId,
+    @required this.id,
+    @required this.title,
+    @required this.completed,
+  });
+
+  factory Todo.fromMap(Map<dynamic, dynamic> map) {
+    final rawCompleted = map['completed'];
+    bool completed;
+    if (rawCompleted is int) {
+      completed = rawCompleted == 1;
+    } else {
+      completed = rawCompleted;
+    }
+    return new Todo(
+      userId: map['userId'],
+      id: map['id'],
+      title: map['title'],
+      completed: completed,
+    );
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  String _msg = '';
+  List<Todo> _todos = [];
 
   void _incrementCounter() {
     setState(() {
@@ -69,13 +99,14 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    initMessage();
+    initTodos();
   }
 
-  Future initMessage() async {
-    final msg = await MethodChannel("api").invokeMethod("getMessage");
+  Future initTodos() async {
+    final List<dynamic> todos =
+        await MethodChannel("api").invokeMethod("getMessage");
     setState(() {
-      _msg = msg;
+      _todos = todos.map((todo) => Todo.fromMap(todo)).toList();
     });
   }
 
@@ -113,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(_msg),
+            Text(_todos.length.toString()),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,

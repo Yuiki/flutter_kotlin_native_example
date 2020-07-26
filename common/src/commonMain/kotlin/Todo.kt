@@ -8,4 +8,12 @@ data class Todo(
         val id: Int,
         val title: String,
         val completed: Boolean
-)
+) {
+    fun toHashMap(): HashMap<String, Any> =
+            HashMap<String, Any>().apply {
+                put("userId", userId)
+                put("id", id)
+                put("title", title)
+                put("completed", completed)
+            }
+}

@@ -10,7 +10,7 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 
 internal expect val ApplicationDispatcher: CoroutineDispatcher
 
-fun testApi(callback: (List<Todo>) -> Unit) {
+fun getTodos(callback: (List<Todo>) -> Unit) {
     val client = HttpClient {
         install(JsonFeature) {
             serializer = KotlinxSerializer()
