@@ -29,6 +29,7 @@ kotlin {
         implementation("io.ktor:ktor-client-core:1.3.2")
         implementation("io.ktor:ktor-client-json:1.3.2")
         implementation("io.ktor:ktor-client-serialization:1.3.2")
+        implementation("com.russhwolf:multiplatform-settings-no-arg:0.6")
     }
 
     sourceSets["androidMain"].dependencies {

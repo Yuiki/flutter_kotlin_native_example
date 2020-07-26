@@ -14,7 +14,7 @@ import common
     channel.setMethodCallHandler({
         (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
 
-        CommonKt.getTodos(callback: ({ it in
+        ApiKt.getTodos(callback: ({ it in
             result(it.map { $0.toHashMap() });
         }))
     })
